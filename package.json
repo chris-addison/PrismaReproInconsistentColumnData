@@ -1,0 +1,26 @@
+{
+  "name": "repro-prisma-issue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:reset": "prisma migrate reset",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "build": "tsc",
+    "start": "npm run prisma:generate && npm run prisma:migrate:reset && npm run prisma:migrate:dev && node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/adapter-pg": "5.13.0",
+    "@prisma/client": "5.13.0",
+    "pg": "8.11.5",
+    "prisma": "5.13.0"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.6",
+    "typescript": "5.4.5"
+  }
+}

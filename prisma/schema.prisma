@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins", "driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BaseUser {
+  id          String @id @db.Uuid
+  intId       BigInt @unique
+  user        User   @relation("userById", fields: [id], references: [id])
+  userByIntId User   @relation("userByIntId", fields: [intId], references: [intId])
+
+  // Indexing intId for faster lookups
+  @@index([intId(ops: Int8BloomOps)], type: Brin)
+}
+
+model User {
+  id          String    @id @db.Uuid
+  intId       BigInt    @unique
+  name        String
+  user        BaseUser? @relation("userById")
+  userByIntId BaseUser? @relation("userByIntId")
+
+  // Indexing intId for faster lookups
+  @@index([intId(ops: Int8BloomOps)], type: Brin)
+}
